@@ -12,8 +12,9 @@ theta = zeros(size(X, 2), 1);
 
 % ---------------------- Sample Solution ----------------------
 
+m = length(y); % number of training examples
 
-
+theta = pinv(X' * X) * X' * y;
 
 % -------------------------------------------------------------
 
