@@ -36,7 +36,20 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+prediction = sigmoid(X * theta);
+prediction_a = log(prediction)' * y;
+prediction_b = log(1 - prediction)' * (1 - y);
 
+ntheta = theta(2:end);
+
+reg = lambda / (2 * m) * (ntheta' * ntheta);
+
+J = -1 / m * (prediction_a + prediction_b) + reg;
+
+reg_grad = (lambda / m) .* theta;
+reg_grad(1) = 0;
+
+grad = 1 / m * X' * (prediction - y) + reg_grad;
 
 
 
