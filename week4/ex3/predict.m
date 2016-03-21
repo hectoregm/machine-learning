@@ -20,14 +20,19 @@ p = zeros(size(X, 1), 1);
 %       information see 'help max'. If your examples are in rows, then, you
 %       can use max(A, [], 2) to obtain the max for each row.
 %
+# Add bias unit
+X = [ones(m, 1) X];
+a1 = X';
 
+a2 = sigmoid(Theta1 * a1);
 
+# Add bias unit for a2
+a2 = [ones(1,size(a2,2)); a2];
+a3 = sigmoid(Theta2 * a2);
 
-
-
-
-
-
+# Prediction for each example is in column form.
+[x, p] = max(a3, [], 1);
+p = p'; # Need to return in column form.
 
 % =========================================================================
 
