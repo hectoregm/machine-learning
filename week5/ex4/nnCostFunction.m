@@ -77,19 +77,20 @@ a2 = [ones(1,size(a2,2)); a2];
 a3 = sigmoid(Theta2 * a2);
 a3 = a3';
 
-% segment_a = log(a3) .* -Y;
-% segment_b = log(1 - a3) .* -(1 - Y);
+% Calculate cost function
+segment_a = log(a3) .* -Y;
+segment_b = log(1 - a3) .* -(1 - Y);
+total = segment_a + segment_b;
+J = 1 / m * sum(total(:));
 
-% J = 1 / m * sum(segment_a + segment_b);
+rTheta1 = Theta1(:,2:end) .^ 2;
+sumTheta1 = sum(rTheta1(:));
+rTheta2 = Theta2(:,2:end) .^ 2;
+sumTheta2 = sum(rTheta2(:));
+reg = lambda / (2 * m) * (sumTheta1 + sumTheta2);
 
-total = 0;
-for i = 1:m
-  for k = 1:num_labels
-    total += (-Y(i,k) * log(a3(i,k))) - ((1 - Y(i,k)) * log(1 - a3(i,k)));
-  end
-end
+J = 1 / m * sum(total(:)) + reg;
 
-J = 1 / m * total
 
 
 
