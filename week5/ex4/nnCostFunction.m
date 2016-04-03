@@ -69,8 +69,7 @@ for i = 1:m
 end
 
 % Forward Propragation
-X = [ones(m, 1) X];
-a1 = X';
+a1 = [ones(m, 1) X]';
 
 a2 = sigmoid(Theta1 * a1);
 a2 = [ones(1,size(a2,2)); a2];
@@ -92,18 +91,33 @@ reg = lambda / (2 * m) * (sumTheta1 + sumTheta2);
 J = 1 / m * sum(total(:)) + reg;
 
 
+% Backpropagation
+X_prime = X';
+Y_prime = Y';
+big_delta1 = zeros(size(Theta1));
+big_delta2 = zeros(size(Theta2));
+nTheta2 = Theta2(:,2:end)';
 
+for i = 1:m
+  a1 = [1; X_prime(:,i)];
+  z2 = Theta1 * a1;
+  a2 = [1; sigmoid(z2)];
+  z3 = Theta2 * a2;
+  a3 = sigmoid(z3);
+  delta_3 = a3 - Y_prime(:,i);
+  size(nTheta2);
+  size(delta_3);
+  size(z2);
+  ndelta_2 = (nTheta2 * delta_3) .* sigmoidGradient(z2);
+  %delta_2 = ndelta_2(2:end);
+  size(delta_2);
+  size(a1');
+  big_delta1 = big_delta1 + ndelta_2 * a1';
+  big_delta2 = big_delta2 + delta_3 * a2';
+end
 
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = big_delta1 .* (1 / m);
+Theta2_grad = big_delta2 .* (1 / m);
 
 % -------------------------------------------------------------
 
