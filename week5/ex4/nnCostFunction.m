@@ -62,10 +62,34 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+Y = zeros(m,num_labels);
 
+for i = 1:m
+  Y(i,y(i)) = 1;
+end
 
+% Forward Propragation
+X = [ones(m, 1) X];
+a1 = X';
 
+a2 = sigmoid(Theta1 * a1);
+a2 = [ones(1,size(a2,2)); a2];
+a3 = sigmoid(Theta2 * a2);
+a3 = a3';
 
+% segment_a = log(a3) .* -Y;
+% segment_b = log(1 - a3) .* -(1 - Y);
+
+% J = 1 / m * sum(segment_a + segment_b);
+
+total = 0;
+for i = 1:m
+  for k = 1:num_labels
+    total += (-Y(i,k) * log(a3(i,k))) - ((1 - Y(i,k)) * log(1 - a3(i,k)));
+  end
+end
+
+J = 1 / m * total
 
 
 
