@@ -24,7 +24,7 @@ total_error = error' * error;
 
 ntheta = theta(2:end);
 reg = (lambda / (2 * m)) * (ntheta' * ntheta);
-J = (1 / (2 * m)) * total_error + reg
+J = (1 / (2 * m)) * total_error + reg;
 
 grad = (1 / m) * (error' * X)';
 
